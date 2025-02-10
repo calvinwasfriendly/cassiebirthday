@@ -11,6 +11,7 @@
             font-family: 'Courier New', Courier, monospace;
             color: #6d2c2c;
             animation: fadeIn 2s ease-in;
+            overflow: hidden;
         }
         @keyframes fadeIn {
             from { opacity: 0; }
@@ -69,19 +70,16 @@
             height: 100%;
             background: transparent;
         }
-        .unmute-button {
-            margin-top: 10px;
-            padding: 10px 15px;
-            font-size: 16px;
-            background-color: #b85c5c;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: transform 0.3s;
+        .heart {
+            position: fixed;
+            top: -50px;
+            font-size: 24px;
+            color: red;
+            animation: fall 5s linear infinite;
         }
-        .unmute-button:hover {
-            transform: scale(1.1);
+        @keyframes fall {
+            from { transform: translateY(-50px); opacity: 1; }
+            to { transform: translateY(100vh); opacity: 0; }
         }
     </style>
 </head>
@@ -100,7 +98,6 @@
             <iframe id="videoPlayer" src="https://www.youtube.com/embed/OnhzM1KcOyY?autoplay=1&controls=0&modestbranding=1&rel=0&showinfo=0&loop=1&playlist=OnhzM1KcOyY&mute=1" allow="autoplay" allowfullscreen></iframe>
             <div class="overlay"></div>
         </div>
-        <button class="unmute-button" onclick="unmuteVideo()">🔊</button>
 
         <div class="rsvp">
             <form action="https://formspree.io/f/mjkgoqvk" method="POST">
@@ -113,11 +110,25 @@
     </div>
     
     <script>
-        function unmuteVideo() {
+        document.addEventListener("click", function () {
             let iframe = document.getElementById("videoPlayer");
-            let src = iframe.src;
-            iframe.src = src.replace("mute=1", "mute=0");
+            let src = iframe.src.replace("mute=1", "mute=0");
+            iframe.src = src;
+        }, { once: true });
+
+        function createHeart() {
+            let heart = document.createElement("div");
+            heart.classList.add("heart");
+            heart.innerHTML = "❤️";
+            heart.style.left = Math.random() * 100 + "vw";
+            heart.style.animationDuration = Math.random() * 3 + 2 + "s";
+            document.body.appendChild(heart);
+            setTimeout(() => {
+                heart.remove();
+            }, 5000);
         }
+
+        setInterval(createHeart, 300);
     </script>
 </body>
 </html>
