@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cassie's 1st Birthday Invitation</title>
     
-    <!-- Open Graph Meta Tags for WhatsApp Preview -->
     <meta property="og:title" content="Cassie's 1st Birthday Invitation">
     <meta property="og:description" content="Join us for Cassie's birthday celebration! 🎉">
     <meta property="og:image" content="https://t4.ftcdn.net/jpg/02/87/58/53/360_F_287585365_Frif6YALlDhXdo03m9DfHJ5hlu4kj3Fp.jpg">
@@ -30,50 +29,50 @@
             width: 80%;
             max-width: 600px;
         }
-        .header {
-            font-size: 24px;
-            font-weight: bold;
-            color: #b85c5c;
-        }
-        .details {
-            font-size: 18px;
-            margin-top: 10px;
-        }
         .video-container {
+            position: relative;
             width: 100%;
             max-width: 560px;
             margin: auto;
+            display: flex;
+            justify-content: center;
         }
-        /* Floating Counter & IP */
-        .floating-info {
-            position: fixed;
-            top: 50px;
-            right: 20px;
-            background: rgba(0, 0, 0, 0.8);
-            color: white;
+        .video-container iframe {
+            width: 100%;
+            max-width: 560px;
+            height: 315px;
+            border: none;
+        }
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: transparent;
+        }
+        .rsvp input, .rsvp button {
             padding: 10px;
-            border-radius: 8px;
-            font-size: 14px;
-            text-align: center;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            margin: 5px;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <p class="header">Cassie's 1st Birthday Invitation</p>
-        <p class="details">My 1st birthday is coming soon! 🎉<br>
-        I would like to invite you all to my little birthday party.<br>
-        Looking forward to seeing you there!</p>
         <p class="details">📅 Date: 15th February 2025</p>
         <p class="details">📍 Location: <a href="https://g.co/kgs/FnKbdMn" target="_blank">McDonald's Bandar Utama DT</a></p>
         <p class="details">⏰ Time: 7 PM</p>
-        
-        <p class="details">📝 Why 15th February? <br> 
-        Cassie was born on 14th February 2025, but since it falls on a Friday, we are celebrating on Saturday, 15th February, so that everyone can join comfortably! 🎉</p>
-        
+
         <p class="details">🎥 Slideshow:</p>
         <div class="video-container">
-            <div id="videoPlayer"></div>
+            <iframe id="videoPlayer" 
+                src="https://www.youtube.com/embed/OnhzM1KcOyY?autoplay=1&controls=0&modestbranding=1&rel=0&showinfo=0&loop=1&playlist=OnhzM1KcOyY&mute=1" 
+                allow="autoplay; encrypted-media" allowfullscreen>
+            </iframe>
         </div>
 
         <div class="rsvp">
@@ -83,73 +82,18 @@
                 <button type="submit">RSVP Now</button>
             </form>
         </div>
-        <p id="response" style="color: green; display: none;">Thank you for RSVPing! See you there! 🎉</p>
     </div>
 
-    <!-- Floating Info Box -->
-    <div class="floating-info">
-        <p>📊 Page Views: <span id="pageViews">0</span></p>
-        <p>🌍 Your IP: <span id="userIP">Loading...</span></p>
-    </div>
-
-    <!-- YouTube Player API Script -->
     <script>
-        var player;
-        function onYouTubeIframeAPIReady() {
-            player = new YT.Player('videoPlayer', {
-                height: '315',
-                width: '560',
-                videoId: 'OnhzM1KcOyY', // Ms. Rachel video
-                playerVars: {
-                    autoplay: 1,
-                    controls: 0,
-                    modestbranding: 1,
-                    rel: 0,
-                    showinfo: 0,
-                    loop: 1,
-                    playlist: 'OnhzM1KcOyY',
-                    mute: 1
-                },
-                events: {
-                    'onReady': function(event) {
-                        event.target.playVideo();
-                    }
-                }
-            });
-        }
-
-        // Unmute the video when user clicks anywhere
+        // Unmute the video on user interaction
         document.addEventListener("click", function () {
-            if (player) {
-                player.unMute();
-                player.setVolume(100);
+            let iframe = document.getElementById("videoPlayer");
+            let src = iframe.src;
+            if (src.includes("mute=1")) {
+                src = src.replace("mute=1", "mute=0");
+                iframe.src = src;
             }
         }, { once: true });
-
-        // Load YouTube API
-        var tag = document.createElement('script');
-        tag.src = "https://www.youtube.com/iframe_api";
-        var firstScriptTag = document.getElementsByTagName('script')[0];
-        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-        // Page View Counter
-        let views = localStorage.getItem('pageViews') || 0;
-        views++;
-        localStorage.setItem('pageViews', views);
-        document.getElementById("pageViews").innerText = views;
-
-        // Fetch IP Address
-        fetch('https://ipinfo.io/json?token=YOUR_TOKEN_HERE')
-            .then(response => response.json())
-            .then(data => {
-                document.getElementById("userIP").innerText = data.ip;
-            })
-            .catch(() => {
-                document.getElementById("userIP").innerText = "Unavailable";
-            });
     </script>
 </body>
 </html>
-
-
-
