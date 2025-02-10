@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cassie's 1st Birthday Invitation</title>
     
+    <!-- Open Graph Meta Tags for WhatsApp Preview -->
     <meta property="og:title" content="Cassie's 1st Birthday Invitation">
     <meta property="og:description" content="Join us for Cassie's birthday celebration! 🎉">
     <meta property="og:image" content="https://t4.ftcdn.net/jpg/02/87/58/53/360_F_287585365_Frif6YALlDhXdo03m9DfHJ5hlu4kj3Fp.jpg">
@@ -17,7 +18,6 @@
             text-align: center;
             font-family: 'Courier New', Courier, monospace;
             color: #6d2c2c;
-            animation: fadeIn 2s ease-in;
             margin: 0;
             padding: 0;
         }
@@ -30,29 +30,48 @@
             width: 80%;
             max-width: 600px;
         }
-        .stats-box {
+        .header {
+            font-size: 24px;
+            font-weight: bold;
+            color: #b85c5c;
+        }
+        .details {
+            font-size: 18px;
+            margin-top: 10px;
+        }
+        .video-container {
+            width: 100%;
+            max-width: 560px;
+            margin: auto;
+        }
+        /* Floating Counter & IP */
+        .floating-info {
             position: fixed;
-            top: 20px;
+            top: 50px;
             right: 20px;
-            background: rgba(255, 255, 255, 0.9);
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
             padding: 10px;
-            border-radius: 10px;
-            box-shadow: 0px 0px 5px gray;
+            border-radius: 8px;
             font-size: 14px;
-            color: #444;
+            text-align: center;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <p class="header">Cassie's 1st Birthday Invitation</p>
+        <p class="details">My 1st birthday is coming soon! 🎉<br>
+        I would like to invite you all to my little birthday party.<br>
+        Looking forward to seeing you there!</p>
         <p class="details">📅 Date: 15th February 2025</p>
         <p class="details">📍 Location: <a href="https://g.co/kgs/FnKbdMn" target="_blank">McDonald's Bandar Utama DT</a></p>
         <p class="details">⏰ Time: 7 PM</p>
         
         <p class="details">📝 Why 15th February? <br> 
         Cassie was born on 14th February 2025, but since it falls on a Friday, we are celebrating on Saturday, 15th February, so that everyone can join comfortably! 🎉</p>
-
+        
+        <p class="details">🎥 Slideshow:</p>
         <div class="video-container">
             <div id="videoPlayer"></div>
         </div>
@@ -64,45 +83,23 @@
                 <button type="submit">RSVP Now</button>
             </form>
         </div>
+        <p id="response" style="color: green; display: none;">Thank you for RSVPing! See you there! 🎉</p>
     </div>
 
-    <!-- Visitor Stats Box -->
-    <div class="stats-box">
-        <p>👀 Page Views: <span id="viewCount">0</span></p>
-        <p>🕒 Last Visit: <span id="lastVisit">-</span></p>
+    <!-- Floating Info Box -->
+    <div class="floating-info">
+        <p>📊 Page Views: <span id="pageViews">0</span></p>
+        <p>🌍 Your IP: <span id="userIP">Loading...</span></p>
     </div>
 
+    <!-- YouTube Player API Script -->
     <script>
-        // Page View Counter
-        if (localStorage.getItem("pageViews")) {
-            let views = parseInt(localStorage.getItem("pageViews")) + 1;
-            localStorage.setItem("pageViews", views);
-            document.getElementById("viewCount").textContent = views;
-        } else {
-            localStorage.setItem("pageViews", 1);
-            document.getElementById("viewCount").textContent = 1;
-        }
-
-        // Last Visit Timestamp
-        let lastVisit = localStorage.getItem("lastVisit");
-        if (lastVisit) {
-            document.getElementById("lastVisit").textContent = lastVisit;
-        }
-        let now = new Date().toLocaleString();
-        localStorage.setItem("lastVisit", now);
-
-        // YouTube API for autoplay video
-        var tag = document.createElement('script');
-        tag.src = "https://www.youtube.com/iframe_api";
-        var firstScriptTag = document.getElementsByTagName('script')[0];
-        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
         var player;
         function onYouTubeIframeAPIReady() {
             player = new YT.Player('videoPlayer', {
                 height: '315',
                 width: '560',
-                videoId: 'OnhzM1KcOyY',
+                videoId: 'OnhzM1KcOyY', // Ms. Rachel video
                 playerVars: {
                     autoplay: 1,
                     controls: 0,
@@ -121,7 +118,7 @@
             });
         }
 
-        // Unmute video on user click
+        // Unmute the video when user clicks anywhere
         document.addEventListener("click", function () {
             if (player) {
                 player.unMute();
@@ -129,6 +126,27 @@
             }
         }, { once: true });
 
+        // Load YouTube API
+        var tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/iframe_api";
+        var firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+        // Page View Counter
+        let views = localStorage.getItem('pageViews') || 0;
+        views++;
+        localStorage.setItem('pageViews', views);
+        document.getElementById("pageViews").innerText = views;
+
+        // Fetch IP Address
+        fetch('https://ipinfo.io/json?token=YOUR_TOKEN_HERE')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("userIP").innerText = data.ip;
+            })
+            .catch(() => {
+                document.getElementById("userIP").innerText = "Unavailable";
+            });
     </script>
 </body>
 </html>
