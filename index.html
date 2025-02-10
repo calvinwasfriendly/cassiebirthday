@@ -104,7 +104,7 @@
         
         <p class="details">🎥 Slideshow:</p>
         <div class="video-container">
-            <iframe id="videoPlayer" src="https://www.youtube.com/embed/OnhzM1KcOyY?autoplay=1&controls=0&modestbranding=1&rel=0&showinfo=0&loop=1&playlist=OnhzM1KcOyY&mute=1" allow="autoplay" allowfullscreen></iframe>
+            <iframe id="videoPlayer" src="https://www.youtube.com/embed/OnhzM1KcOyY?autoplay=1&controls=0&modestbranding=1&rel=0&showinfo=0&loop=1&playlist=OnhzM1KcOyY&mute=1" allow="autoplay; encrypted-media" allowfullscreen></iframe>
             <div class="overlay"></div>
         </div>
 
@@ -119,12 +119,17 @@
     </div>
     
     <script>
+        // Unmute the video on user interaction
         document.addEventListener("click", function () {
             let iframe = document.getElementById("videoPlayer");
-            let src = iframe.src.replace("mute=1", "mute=0");
-            iframe.src = src;
+            let src = iframe.src;
+            if (src.includes("mute=1")) {
+                src = src.replace("mute=1", "mute=0");
+                iframe.src = src;
+            }
         }, { once: true });
 
+        // Heart animation
         function createHeart() {
             let heart = document.createElement("div");
             heart.classList.add("heart");
