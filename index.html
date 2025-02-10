@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cassie's 1st Birthday Invitation</title>
-    
+
     <!-- Open Graph Meta Tags for WhatsApp Preview -->
     <meta property="og:title" content="Cassie's 1st Birthday Invitation">
     <meta property="og:description" content="Join us for Cassie's birthday celebration! 🎉">
     <meta property="og:image" content="https://t4.ftcdn.net/jpg/02/87/58/53/360_F_287585365_Frif6YALlDhXdo03m9DfHJ5hlu4kj3Fp.jpg">
-    <meta property="og:url" content="https://cassieisgreat.com">
+    <meta property="og:url" content="YOUR_WEBSITE_URL_HERE">
     <meta property="og:type" content="website">
-    
+
     <style>
         body {
             background-color: #ffebef;
@@ -20,6 +20,7 @@
             color: #6d2c2c;
             margin: 0;
             padding: 0;
+            cursor: url('https://cdn-icons-png.flaticon.com/128/3467/3467999.png'), auto;
         }
         .container {
             background: white;
@@ -50,46 +51,48 @@
             margin: 5px;
         }
         .video-container {
+            position: relative;
             width: 100%;
             max-width: 560px;
-            margin: 20px auto;
+            margin: auto;
         }
         .video-container iframe {
             width: 100%;
             height: 315px;
-            border-radius: 10px;
             border: none;
         }
-        .page-counter {
-            position: fixed;
-            top: 10px;
-            right: 10px;
-            background: rgba(0, 0, 0, 0.7);
-            color: white;
-            padding: 10px;
-            border-radius: 8px;
-            font-size: 14px;
+        .balloon {
+            position: absolute;
+            font-size: 30px;
+            color: red;
+            top: 100%;
+            animation: floatUp 5s linear infinite;
+        }
+        @keyframes floatUp {
+            from { transform: translateY(100vh); opacity: 1; }
+            to { transform: translateY(-20vh); opacity: 0; }
+        }
+        .countdown {
+            font-size: 22px;
+            font-weight: bold;
+            color: #b85c5c;
+            margin: 15px 0;
         }
     </style>
 </head>
 <body>
-    <div class="page-counter">
-        📊 Page Views: <span id="counter">0</span>
-    </div>
-
     <div class="container">
         <p class="header">Cassie's 1st Birthday Invitation</p>
-        <p class="details">My 1st birthday is coming soon! 🎉<br>
-        I would like to invite you all to my little birthday party.<br>
-        Looking forward to seeing you there!</p>
-
         <p class="details">📅 Date: 15th February 2025</p>
         <p class="details">📍 Location: <a href="https://g.co/kgs/FnKbdMn" target="_blank">McDonald's Bandar Utama DT</a></p>
         <p class="details">⏰ Time: 7 PM</p>
+        
+        <p class="countdown" id="countdown">Countdown: Loading...</p>
 
-        <p class="details">📝 Why 15th February? <br>
-            Cassie was born on 14th February 2025, but since it falls on a Friday, we are celebrating on **Saturday, 15th February**, so that everyone can join comfortably! 🎉
-        </p>
+        <p class="details">🎥 Slideshow:</p>
+        <div class="video-container">
+            <iframe id="videoPlayer" src="https://www.youtube.com/embed/NgVwnTOsGnE?autoplay=1&controls=0&modestbranding=1&rel=0&showinfo=0&loop=1&playlist=NgVwnTOsGnE&mute=1" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        </div>
 
         <div class="rsvp">
             <form action="https://formspree.io/f/mjkgoqvk" method="POST">
@@ -99,22 +102,47 @@
             </form>
         </div>
 
-        <p class="details">🎥 Slideshow:</p>
-        <div class="video-container">
-            <iframe id="videoPlayer" 
-    src="https://www.youtube.com/embed/NgVwnTOsGnE?autoplay=1&mute=1&loop=1&playlist=NgVwnTOsGnE&controls=1&modestbranding=1" 
-    allow="autoplay; encrypted-media" 
-    allowfullscreen>
-</iframe>
-
+        <button onclick="showFunFact()">🍼 Fun Fact About Cassie</button>
+        <p id="funFact" style="display: none;">Cassie was born on 14th February, but we are celebrating on 15th so that everyone can attend comfortably! 🎉</p>
     </div>
 
     <script>
-        // Page counter logic
-        let pageViews = localStorage.getItem('pageViews') || 0;
-        pageViews++;
-        localStorage.setItem('pageViews', pageViews);
-        document.getElementById('counter').innerText = pageViews;
+        // Countdown Timer
+        function updateCountdown() {
+            const eventDate = new Date("February 15, 2025 19:00:00").getTime();
+            const now = new Date().getTime();
+            const distance = eventDate - now;
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById("countdown").innerHTML = `Countdown: ${days}d ${hours}h ${minutes}m ${seconds}s`;
+            if (distance < 0) {
+                document.getElementById("countdown").innerHTML = "The party has started! 🎉";
+            }
+        }
+        setInterval(updateCountdown, 1000);
+
+        // Floating Balloons
+        function createBalloon() {
+            let balloon = document.createElement("div");
+            balloon.classList.add("balloon");
+            balloon.innerHTML = "🎈";
+            balloon.style.left = Math.random() * 100 + "vw";
+            balloon.style.animationDuration = Math.random() * 3 + 3 + "s";
+            document.body.appendChild(balloon);
+            setTimeout(() => {
+                balloon.remove();
+            }, 5000);
+        }
+        setInterval(createBalloon, 700);
+
+        // Fun Fact Button
+        function showFunFact() {
+            document.getElementById("funFact").style.display = "block";
+        }
     </script>
 </body>
 </html>
