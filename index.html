@@ -20,15 +20,26 @@
             color: #6d2c2c;
             margin: 0;
             padding: 0;
+            overflow: hidden;
+        }
+        .background-video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
         }
         .container {
-            background: white;
+            background: rgba(255, 255, 255, 0.9);
             padding: 20px;
             border-radius: 15px;
             box-shadow: 0px 0px 10px gray;
             margin: 50px auto;
             width: 80%;
             max-width: 600px;
+            position: relative;
+            z-index: 1;
         }
         .header {
             font-size: 24px;
@@ -48,6 +59,8 @@
     </style>
 </head>
 <body>
+    <iframe class="background-video" src="https://www.youtube.com/embed/NgVwnTOsGnE?autoplay=1&controls=0&modestbranding=1&rel=0&showinfo=0&loop=1&playlist=NgVwnTOsGnE&mute=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+    
     <div class="container">
         <p class="header">Cassie's 1st Birthday Celebration</p>
         <p class="details">📅 Date: 15th February 2025</p>
@@ -55,11 +68,6 @@
         <p class="details">⏰ Time: 7 PM</p>
         
         <p class="countdown" id="countdown">Countdown: Loading...</p>
-
-        <p class="details">🎥 Slideshow:</p>
-        <div class="video-container">
-            <iframe id="videoPlayer" src="https://www.youtube.com/embed/NgVwnTOsGnE?autoplay=1&controls=0&modestbranding=1&rel=0&showinfo=0&loop=1&playlist=NgVwnTOsGnE&mute=1" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-        </div>
 
         <p class="details">RSVP is now closed. Thank you for coming! 🎉</p>
         <p class="details">🚗 Need directions? Use Waze: <a href="https://ul.waze.com/ul?venue_id=66584607.665911610.339306&overview=yes&utm_campaign=default&utm_source=waze_website&utm_medium=lm_share_location" target="_blank">Click here</a></p>
