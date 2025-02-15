@@ -20,7 +20,6 @@
             color: #6d2c2c;
             margin: 0;
             padding: 0;
-            cursor: url('https://cdn-icons-png.flaticon.com/128/3467/3467999.png'), auto;
         }
         .container {
             background: white;
@@ -40,38 +39,6 @@
             font-size: 18px;
             margin-top: 10px;
         }
-        .rsvp {
-            margin-top: 20px;
-        }
-        .rsvp input, .rsvp button {
-            padding: 10px;
-            font-size: 16px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-            margin: 5px;
-        }
-        .video-container {
-            position: relative;
-            width: 100%;
-            max-width: 560px;
-            margin: auto;
-        }
-        .video-container iframe {
-            width: 100%;
-            height: 315px;
-            border: none;
-        }
-        .balloon {
-            position: absolute;
-            font-size: 30px;
-            color: red;
-            top: 100%;
-            animation: floatUp 5s linear infinite;
-        }
-        @keyframes floatUp {
-            from { transform: translateY(100vh); opacity: 1; }
-            to { transform: translateY(-20vh); opacity: 0; }
-        }
         .countdown {
             font-size: 22px;
             font-weight: bold;
@@ -82,7 +49,7 @@
 </head>
 <body>
     <div class="container">
-        <p class="header">Cassie's 1st Birthday Invitation</p>
+        <p class="header">Cassie's 1st Birthday Celebration</p>
         <p class="details">📅 Date: 15th February 2025</p>
         <p class="details">📍 Location: <a href="https://g.co/kgs/FnKbdMn" target="_blank">McDonald's Bandar Utama DT</a></p>
         <p class="details">⏰ Time: 7 PM</p>
@@ -94,16 +61,8 @@
             <iframe id="videoPlayer" src="https://www.youtube.com/embed/NgVwnTOsGnE?autoplay=1&controls=0&modestbranding=1&rel=0&showinfo=0&loop=1&playlist=NgVwnTOsGnE&mute=1" allow="autoplay; encrypted-media" allowfullscreen></iframe>
         </div>
 
-        <div class="rsvp">
-            <form action="https://formspree.io/f/mjkgoqvk" method="POST">
-                <input type="text" name="name" placeholder="Enter your name to RSVP" required>
-                <input type="number" name="pax" placeholder="Number of attendees" min="1" required>
-                <button type="submit">RSVP Now</button>
-            </form>
-        </div>
-
-        <button onclick="showFunFact()">🍼 Fun Fact About Cassie</button>
-        <p id="funFact" style="display: none;">Cassie was born on 14th February, but we are celebrating on 15th so that everyone can attend comfortably! 🎉</p>
+        <p class="details">RSVP is now closed. Thank you for coming! 🎉</p>
+        <p class="details">🚗 Need directions? Use Waze: <a href="https://ul.waze.com/ul?venue_id=66584607.665911610.339306&overview=yes&utm_campaign=default&utm_source=waze_website&utm_medium=lm_share_location" target="_blank">Click here</a></p>
     </div>
 
     <script>
@@ -124,25 +83,6 @@
             }
         }
         setInterval(updateCountdown, 1000);
-
-        // Floating Balloons
-        function createBalloon() {
-            let balloon = document.createElement("div");
-            balloon.classList.add("balloon");
-            balloon.innerHTML = "🎈";
-            balloon.style.left = Math.random() * 100 + "vw";
-            balloon.style.animationDuration = Math.random() * 3 + 3 + "s";
-            document.body.appendChild(balloon);
-            setTimeout(() => {
-                balloon.remove();
-            }, 10000);
-        }
-        setInterval(createBalloon, 700);
-
-        // Fun Fact Button
-        function showFunFact() {
-            document.getElementById("funFact").style.display = "block";
-        }
     </script>
 </body>
 </html>
